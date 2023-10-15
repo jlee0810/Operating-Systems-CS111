@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     int fds[argc - 1][2];
     pid_t cpid[argc - 1];
-    int wstatus;
+    int st;
 
     // Check for no command-line arguments
     if (argc < 2)
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     {
         if (pipe(fds[i]) == -1)
         {
-            perror("Pipe");
+            perror("Error in Creating Pipe");
             exit(errno);
         }
     }
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         cpid[j] = fork();
         if (cpid[j] < 0)
         {
-            perror("Fork");
+            perror("Error in Fork");
             exit(errno);
         }
         else if (cpid[j] == 0)
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
             {
                 dup2(fds[j][1], STDOUT_FILENO);
             }
-            
+
             // Redirect STDIN for all commands except the first
             if (j != 0)
             {
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
     // Wait for all children to terminate
     for (int j = 0; j < argc - 1; j++)
     {
-        waitpid(cpid[j], &wstatus, 0);
-        if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) != 0)
+        waitpid(cpid[j], &st, 0);
+        if (!WIFEXITED(st) || WEXITSTATUS(st) != 0)
         {
-            exit_status = WEXITSTATUS(wstatus); // Update exit status if a child fails
+            exit_status = WEXITSTATUS(st); // Update exit status if a child fails
         }
     }
 
