@@ -42,19 +42,23 @@ int main(int argc, char *argv[])
             if (j < argc - 2)
             {
                 dup2(fds[j][1], STDOUT_FILENO);
+                close(fds[j][1]); // Close after dup2
             }
 
             // Redirect STDIN for all commands except the first
             if (j != 0)
             {
                 dup2(fds[j - 1][0], STDIN_FILENO);
+                close(fds[j - 1][0]); // Close after dup2
             }
 
-            // Close all pipe fds
+            // Close all other pipe fds
             for (int l = 0; l < argc - 1; l++)
             {
-                close(fds[l][0]);
-                close(fds[l][1]);
+                if (l != j)
+                    close(fds[l][1]);
+                if (l != j - 1)
+                    close(fds[l][0]);
             }
 
             execlp(argv[j + 1], argv[j + 1], NULL);
