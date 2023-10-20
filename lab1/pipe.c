@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
             execlp(argv[j + 1], argv[j + 1], NULL);
             perror("execlp");
-            exit(EXIT_FAILURE);
+            exit(errno);
         }
 
         else
