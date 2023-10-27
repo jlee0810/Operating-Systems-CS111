@@ -13,8 +13,17 @@ To build:
 make
 ./pipe [CMDs]
 
+or 
+
+gcc -o pipe pipe.c
+./pipe [CMDs]
+
 To test:
 python -m unittest
+or 
+./pipe [CMDs] and compare output with CMDs with | operators
+
+*Doesn't support text inputs or flags*
 
 ## Running
 
