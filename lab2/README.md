@@ -1,28 +1,46 @@
 # You Spin Me Round Robin
 
-TODO
+Implementation of the round robin scheduling with C where it has an input of a txt file with process id, arrival time, and burst time. 
+Users can specify a quantum length or pass in an option of median where it specifies the quantum length of each process as the median 
+cpu time of process in queue.
 
 ## Building
 
 ```shell
-TODO
+To build the executable type in the command make.
+
 ```
 
 ## Running
 
-cmd for running TODO
+cmd for running
 ```shell
-TODO
+To run: ./rr [YOUR_TXT_FILE.txt] [quantum length or 'median']
+
+Example:
+Static quantum length:
+./rr processes.txt 30
+
+Dynamic quantum length (median):
+./rr processes.txt median
+
 ```
 
-results TODO
+results
 ```shell
-TODO
+❯ ./rr processes.txt 30
+Average wait time: 82.75
+Average response time: 37.00
+
+❯ ./rr processes.txt median
+Average wait time: 81.75
+Average response time: 13.75
 
 ```
 
 ## Cleaning up
 
 ```shell
-TODO
+After done with executable simply run the command
+make clean
 ```
