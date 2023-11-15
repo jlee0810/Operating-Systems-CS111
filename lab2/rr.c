@@ -313,6 +313,8 @@ int main(int argc, char *argv[])
 
                 // print out the context switch from prev_run to cur_run
                 // printf("Context switch from process %ld to process %ld\n", prev_run->pid, cur_run->pid);
+                //print current time
+                // printf("Current time: %ld\n", cur_time);
             }
 
             prev_run = cur_run;
@@ -329,10 +331,13 @@ int main(int argc, char *argv[])
             cur_quant = 0;
         }
 
+        if (!running && TAILQ_EMPTY(&list)) {
+            prev_run = NULL;
+        }
+
         cur_time++;
 
         // Insert processes with arrival_time of cur_time into the list
-
         if (running)
         {
             cur_quant++;
