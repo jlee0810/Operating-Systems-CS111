@@ -449,8 +449,8 @@ void write_inode_table(int fd)
 	hello_world_symlink.i_gid = 1000;
 	hello_world_symlink.i_links_count = 1;
 	hello_world_symlink.i_blocks = 0; /* These are oddly 512 blocks */
-	memcpy(hello_world_symlink.i_block, 'hello-world', strlen("hello-world"));
-	write_inode(fd, HELLO_WORLD_INO, &hello_world_file);
+	memcpy(hello_world_symlink.i_block, "hello-world", strlen("hello-world"));
+	write_inode(fd, HELLO_INO, &hello_world_symlink);
 }
 
 void write_root_dir_block(int fd)
